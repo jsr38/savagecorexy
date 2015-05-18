@@ -1,3 +1,4 @@
+use <kjn-parts-library.scad>;
 use <misumi-parts-library.scad>;
 use <bed.scad>;
 use <XGantry.scad>
@@ -9,41 +10,53 @@ use <idler-corner.scad>
 //use <scissor-lift.scad>
 use <z-leadscrew-gantry.scad>
 
-extrusion= 20; // extrusion 2020
-sides= 500; // side length of cube in mm
-sep1= sides/2+extrusion/2; // separation of each side
-sep= sides;
-height= sides-extrusion/2;
+extrusion= 40; // extrusion 4040
+//sides= 1000; // side length of cube in mm
+
+// Bear in mind, x and y are transposed with respect to
+// the reference corexy documentation here
+// http://www.corexy.com/theory.html
+
+side_x = 1500;
+side_y = 500;
+side_z = 500;
+
+sep_x = side_x/2+extrusion/2; // separation of each side
+sep_y = side_y/2+extrusion/2; // separation of each side
+sep_z = side_z/2+extrusion/2; // separation of each side
+
+//sep= sides;
+//height= sides-extrusion/2;
 bsep= sides/2;
 bsep1= sides/2+extrusion/2;
 bheight= sides-30;
 
 module gantry(xpos=0) {
         translate([0,0,-2]) Xgantry(xpos);
-        translate([sep1+10,0,-10]) rotate([0,0,90]) Ycarriage_with_wheels();
-        translate([-sep1-10,0,-10]) rotate([0,0,-90]) Ycarriage_with_wheels();
+        translate([sep_y + (extrusion / 2.0),0,- (extrusion / 2.0)]) rotate([0,0,90]) Ycarriage_with_wheels();
+        translate([-sep_y - (extrusion / 2.0),0,- (extrusion / 2.0)]) rotate([0,0,-90]) Ycarriage_with_wheels();
 
 }
 
 
 // bottom
 raised= 30;
-translate([-sep1,-sep/2,extrusion/2+raised]) hfs2020(sides);
-translate([sep1,-sep/2,extrusion/2+raised]) hfs2020(sides);
-translate([sep/2,sep1,extrusion/2+raised]) rotate([0,0,90]) hfs2020(sides);
-translate([sep/2,-sep1,extrusion/2+raised]) rotate([0,0,90]) hfs2020(sides);
+translate([-sep_x,-sep_y/2.0,extrusion/2+raised]) itm4040(side_y);
+translate([sep_x,-sep_y/2.0,extrusion/2+raised]) itm4040(side_y);
+translate([sep_x,sep_y,extrusion/2+raised]) rotate([0,0,90]) itm4040(side_x);
+translate([sep_x,-sep_y,extrusion/2+raised]) rotate([0,0,90]) itm4040(side_x);
 
 // verticals
-translate([-sep1,-sep1,0]) rotate([90,0,0]) hfs2020(sides);
-translate([sep1,-sep1,0]) rotate([90,0,0]) hfs2020(sides);
-translate([-sep1,sep1,0]) rotate([90,0,0]) hfs2020(sides);
-translate([sep1,sep1,0]) rotate([90,0,0]) hfs2020(sides);
+translate([-sep1,-sep1,0]) rotate([90,0,0]) itm4040(sides);
+translate([sep1,-sep1,0]) rotate([90,0,0]) itm4040(sides);
+translate([-sep1,sep1,0]) rotate([90,0,0]) itm4040(sides);
+translate([sep1,sep1,0]) rotate([90,0,0]) itm4040(sides);
 
 // top
-translate([-sep1,-sep/2,height-raised]) hfs2020(sides);
-translate([sep1,-sep/2,height-raised]) hfs2020(sides);
-translate([sep/2,sep1,height-raised]) rotate([0,0,90]) hfs2020(sides);
-translate([sep/2,-sep1,height-raised]) rotate([0,0,90]) hfs2020(sides);
+translate([-sep1,-sep/2,height-raised]) itm4040(sides);
+translate([sep1,-sep/2,height-raised]) itm4040(sides);
+translate([sep/2,sep1,height-raised]) rotate([0,0,90]) itm4040(sides);
+translate([sep/2,-sep1,height-raised]) rotate([0,0,90]) itm4040(sides);
 
 // brackets inside bottom corner lr
 translate([bsep, -sep1, raised]) rotate([0,180,90]) hblfsn5();
@@ -131,7 +144,7 @@ ght= raised+10+bedh;
 
 if(1) {
 	translate([sides/2+60, zgantry_pos, 30])  rotate([90,0,-90]) hfs2040(zgantry_length);
-	translate([-cantilever1_length/2+50, zgantry_pos-20-10, ght])  rotate([0,0,-90]) hfs2020(cantilever1_length);
+	translate([-cantilever1_length/2+50, zgantry_pos-20-10, ght])  rotate([0,0,-90]) itm4040(cantilever1_length);
 	//translate([sides/2-cantilever1_length+40, zgantry_pos+35, ght])  rotate([0,90,0]) hbl45ts5();
 	translate([sides/2+60, zgantry_pos, ght]) rotate([0, 0, -90])   Zcarriage_with_wheels();
 	translate([230+60, zgantry_pos, 50]) rotate([0, 90, 90])  actuator();
@@ -141,7 +154,7 @@ if(1) {
 	translate([-sides/2, 0, ght])  rotate([0,90,0]) vslot_mini_carriage();
 
 	// cross support
-	translate([0, 10, ght])  rotate([0,0,0]) hfs2020(150);
+	translate([0, 10, ght])  rotate([0,0,0]) itm4040(150);
 }
 
 module vslot_mini_carriage() {
