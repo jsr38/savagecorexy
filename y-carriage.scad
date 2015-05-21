@@ -12,8 +12,8 @@ Ycarriage(1);
 //Ycarriage_with_wheels();
 
 // the dimensions of the extrusion to run on
-extrusion_width= 20; // the side that the wheels run on
-extrusion_height= 20;
+extrusion_width= 40; // the side that the wheels run on
+extrusion_height= 40;
 
 // the thickness of the base
 thickness = 8;

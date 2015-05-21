@@ -1,5 +1,5 @@
-use <../MCAD/regular_shapes.scad>
-use <../MCAD/boxes.scad>
+use <MCAD/regular_shapes.scad>
+use <MCAD/boxes.scad>
 include <myLibs.scad>
 
 pillar_h= 15;

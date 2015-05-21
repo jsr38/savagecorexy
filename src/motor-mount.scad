@@ -1,6 +1,6 @@
-use <../MCAD/motors.scad>
+use <MCAD/motors.scad>
 use <../myLibs.scad>
-use <../MCAD/triangles.scad>
+use <MCAD/triangles.scad>
 
 w= 54;
 h= 50;
