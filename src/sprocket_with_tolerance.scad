@@ -1,4 +1,4 @@
-use <../MCAD/bearing.scad>
+use <MCAD/bearing.scad>
 
 module sprocket(teeth=20, roller=3, pitch=17, thickness=3, tolerance=0.2){
 	$fs=0.5;

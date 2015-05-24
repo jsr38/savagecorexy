@@ -6,7 +6,7 @@ use <dual-v-wheel.scad>
 use <myLibs.scad>
 use <XGantry-wide.scad>
 use <squirrel-fan.scad>
-use <../MCAD/boxes.scad>
+use <MCAD/boxes.scad>
 
 mm= 25.4;
 

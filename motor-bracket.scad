@@ -1,7 +1,7 @@
 use <misumi-parts-library.scad>;
-use <../MCAD/stepper.scad>
-use <../MCAD/motors.scad>
-use <../MCAD/triangles.scad>
+use <MCAD/stepper.scad>
+use <MCAD/motors.scad>
+use <MCAD/triangles.scad>
 use <motor-mount.scad>
 use <myLibs.scad>
 

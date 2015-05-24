@@ -1,5 +1,5 @@
 use <myLibs.scad>
-use <../MCAD/triangles.scad>
+use <MCAD/triangles.scad>
 
 width= 40;
 height= 35;

@@ -4,7 +4,7 @@ use <misumi-parts-library.scad>
 use <dual-v-wheel.scad>
 use <myLibs.scad>
 use <motor-mount.scad>
-use <../MCAD/teardrop.scad>
+use <MCAD/teardrop.scad>
 use <leadscrew-bearing-block.scad>
 
 mm= 25.4;
