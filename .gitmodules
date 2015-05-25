@@ -1,0 +1,3 @@
+[submodule "metric-cerberus"]
+	path = metric-cerberus
+	url = https://github.com/jsr38/metric-cerberus.git
