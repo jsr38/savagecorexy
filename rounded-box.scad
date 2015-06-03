@@ -2,6 +2,9 @@
 use_minkowski = true;
 cylinder_faces = 100;
 
+%rounded_box(10,10,10, 2);
+cylinder(r = 2, h = 1);
+
 module rounded_box(length, width, height, r) {
 
     if (use_minkowski) {
@@ -12,7 +15,7 @@ module rounded_box(length, width, height, r) {
 
             cube(size=[ length - (r * 2.0),
                         width - (r * 2.0),
-                        height ], center = false);
+                        height - 1 ], center = false);
 
         }
         
