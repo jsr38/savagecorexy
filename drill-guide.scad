@@ -2,7 +2,7 @@ use <foot.scad>;
 use <metric-cerberus/metric-cerberus.scad>
 
 extrusion     = 40;        // 40mm x 40mm
-tolerance     = 0.75;      // 0.75mm in each direction
+tolerance     = 0.00;      // 0.75mm in each direction
 corner_radius = 2.5;
 scale_factor  = (extrusion + 2.0 * tolerance) / extrusion;  // careful!  We are adopting extrusion_scale from config.scad in the metric-cerberus project.  extrusion_scale=1.02 currently
 
@@ -13,7 +13,7 @@ guide_thickness = (2.5 - (extrusion / 2.0 * (scale_factor - 1.0)));   // mm
 
 guide_length    =  65.0;   // mm
 guide_width     =  25.0;   // mm
-guide_hole_size =   2.0;   // mm *diameter* 
+guide_hole_size =   1.75;   // mm *diameter* 
 guide_hole_offsets   = [ 20.0, 30.0, 40.0, 50.0 ];  // mm
 guide_support_radius = (8.0 + 2.0) / 2.0; // mm
 
@@ -33,7 +33,7 @@ if (1) {
     
     union () {
         difference () {
-            foot(guide_foot_length, guide_foot_width, guide_foot_height, corner_radius = corner_radius);
+            foot(guide_foot_length, guide_foot_width, guide_foot_height, scale_factor = scale_factor, corner_radius = corner_radius);
             translate([0, - guide_foot_width / 4.0 , guide_foot_height / 2.0]) cube([guide_foot_length, guide_foot_width / 2.0, guide_foot_height], center = true);
         }
         translate([0, 0, 0]) difference () {
@@ -63,5 +63,5 @@ if (1) {
 
 if (1) {
     //scale_factor = 1.0;
-    %color("blue") extrusion4040_no_hole(h=40, mushroom_angles = [0, 90,180,270]);
+    %color("blue") translate([0,0,guide_foot_width / 2.0]) rotate([-90, 0, 0]) extrusion4040_no_hole(h=40, mushroom_angles = [0, 90,180,270]);
 }
