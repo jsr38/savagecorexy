@@ -10,13 +10,12 @@ motor_mount_bolt_r  =  2.75;
 motor_boss_cutout_r = 19.55;
 frame_mount_bolt_r  =  4.15;
 
+is_rh_mount = true;
+
+mirror_y = is_rh_mount ? 1 : 0;
 
 
-
-mirror([0,1,0])
-
-
-rotate([0,-90,0])
+mirror([0,mirror_y,0]) rotate([0,-90,0])
 
 union(){
 	translate([0,0,5])
