@@ -20,7 +20,7 @@ sqrt2 = sqrt(2.0);
 
 thickness = 4.0;
 width = 35.0;
-height = bearing_thickness * 4.0 + 3.0;
+height = bearing_thickness * 4.0 + 3.0 + 2.0 * thickness;
 
 union () {
 	difference() {
