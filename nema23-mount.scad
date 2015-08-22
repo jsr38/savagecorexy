@@ -10,7 +10,7 @@ motor_mount_bolt_r  =  2.75;
 motor_boss_cutout_r = 19.55;
 frame_mount_bolt_r  =  4.2;
 
-is_rh_mount = true;
+is_rh_mount = false;
 
 mirror_y = is_rh_mount ? 1 : 0;
 
@@ -52,7 +52,7 @@ union(){
 	}
 }
 	hull() {
-			translate([-1,32.5,32.5]) rotate([0,90,0]) cylinder(r = motor_boss_cutout_r, h = thick + 2);
-			translate([0.0, 32.5 / 2.0, -1.0]) cube([thick, 32.5, 32.5]);
+        translate([-1,32.5,32.5 + 5]) rotate([0,90,0]) cylinder(r = motor_boss_cutout_r, h = thick + 2);
+		translate([0.0, 32.5 / 2.0, 0.0]) cube([thick, 32.5, 32.5]);
 	}
 }
