@@ -41,6 +41,10 @@ union() {
             polyhole(d = frame_mount_bolt_r * 2.0, h = thick + 2.0);
             translate([frame_mount_pitch, 0 , 0]) polyhole(d = frame_mount_bolt_r * 2.0, h = thick + 2.0);
         }
+        rotate([-90, 0, 0]) union() {
+            translate([0, 0, -1.0]) cylinder(r=20, h = thick + 2.0);
+            translate([0, -mount_height, -1.0]) scale([1.0, (mount_height - (20.0 + bearing_h * 2.0)) / 20.0, 1.0]) cylinder(r=20, h = thick + 2.0);
+        }
     }
     
     translate ([0, -bearing_mount_r + thick, ballscrew_upper_spigot]) difference () {
