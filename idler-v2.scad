@@ -3,7 +3,7 @@
 
 $fn=100;
 
-thickness = 4.0;
+thickness = 8.0;
 width = 35.0;
 
 mount_hole_pitch = 25.4;
@@ -37,6 +37,11 @@ difference() {
 
 			translate([0.0, 0.0, height - thickness]) idler_plate();			translate([1.25, thickness, -thickness]) cube([width - 2.5, thickness, thickness]);
 		}
+        difference () {
+            cylinder(r = bearing_mount_r, h = bearing_h * 2.0);
+            translate ([0, 0, -1.0]) polyhole(d = bearing_o_d + bearing_o_tol, h = bearing_h + 1.5);
+            translate ([0, 0, bearing_h - 0.5]) polyhole(d = bearing_i_d + 0.5, h = bearing_h + 1.5);
+        }
 	}
 	
 	translate([width - support_width / 2.0 - mount_hole_pitch / 2.0, thickness + 1.0, - extrusion_width / 2.0]) rotate([90, 0, 0]) cylinder(r = mount_hole_r, h = thickness + 2.0);

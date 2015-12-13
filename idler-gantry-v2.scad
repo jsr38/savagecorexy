@@ -3,7 +3,7 @@
 
 $fn=100;
 
-thickness = 4.0;
+thickness = 8.0;
 width = 35.0;
 
 mount_hole_pitch = 20.0;
