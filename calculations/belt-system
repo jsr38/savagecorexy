@@ -1,0 +1,27 @@
+% -*- mode: latex; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- 
+
+\documentclass[12pt,a4paper,oneside,draft]{article}
+\usepackage{mathtools}
+
+\begin{document}
+
+\title{How to Structure a \LaTeX{} Document}
+\author{Joe Bloggs\\
+  School of Computing,\\
+  University of Study,\\
+  Books,\\
+  United Readdom,\\
+  RN 1234\\
+  \texttt{jbloggs@latex.wizard}}
+\date{\today}
+\maketitle
+
+\section{Belt calculations}
+
+\begin{equation}
+l  = \pi \left( r_1 + r_2 \right) + 2\sqrt{ s^2 + \left( r_2 - r_1 \right) ^2 } 
+\end{equation}
+
+
+
+\end{document}
