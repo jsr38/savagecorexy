@@ -66,7 +66,14 @@ union() {
             translate([-bearing_mount_r, 0, bearing_h]) rotate([90,0,90]) {
                 difference() {
                     cube([microswitch_length + microswitch_surround, microswitch_width + microswitch_surround, microswitch_height + microswitch_surround], center=true);
-                    %translate([0,0,-microswitch_surround / 2.0]) cube([microswitch_length, microswitch_width, microswitch_height], center=true);
+                    translate([0,0,-microswitch_surround / 2.0]) cube([microswitch_length + microswitch_tol, microswitch_width + microswitch_tol, microswitch_height + microswitch_tol], center=true);
+           
+                }
+            }
+            translate([0, -bearing_mount_r, bearing_h]) rotate([0,0,0]) {
+                difference() {
+                    cube([microswitch_length + microswitch_surround, microswitch_width + microswitch_surround, microswitch_height + microswitch_surround], center=true);
+                    translate([0,0,-microswitch_surround / 2.0 - 1.0]) cube([microswitch_length + microswitch_tol, microswitch_width + microswitch_tol, microswitch_height + microswitch_tol], center=true);
            
                 }
             }
