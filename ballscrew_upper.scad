@@ -48,6 +48,8 @@ microswitch_blade_h  =    6.40;   //measured from blade tip to screw hole centre
 microswitch_blade_thick =  0.6;
 microswitch_blade_rec_clearance = 2.50;
 
+microswitch_blade_offsets = [ 1.70, 1.70 + 8.80, 1.70 + 8.80 + 7.30 ];
+microswitch_screw_offsets = [ microswitch_screw_l_offset, microswitch_screw_l_offset + microswitch_screw_pitch ];
 
 is_y_endstop = true;
 
@@ -74,8 +76,17 @@ module microswitch_cutout() {
     union() {
         cube([microswitch_length + microswitch_tol, microswitch_width + microswitch_tol, microswitch_height + microswitch_tol], center=true);
         // the blade and receptacle cut-outs
-        cube([microswitch_blade_thick + microswitch_blade_rec_clearance / 2.0, microswitch_blade_w + microswitch_blade_rec_clearance / 2.0, microswitch_blade_h - microswitch_screw_h]);
-    
+        for (blade_offset = microswitch_blade_offsets ) {
+            echo(blade_offset);
+            translate([blade_offset - microswitch_length / 2.0, 0, (microswitch_height + microswitch_surround) / 2.0 + 1.0]) cube([microswitch_blade_thick + microswitch_blade_rec_clearance / 2.0, microswitch_blade_w + microswitch_blade_rec_clearance / 2.0, microswitch_blade_h - microswitch_screw_h + 2.0], center = true);
+        }
+        // the mounting screw holes
+      
+        for (screw_offset = microswitch_screw_offsets ) {
+            echo(screw_offset);
+            translate([screw_offset - microswitch_length / 2.0, (microswitch_width + microswitch_surround) / 2.0,0]) rotate([90,0,0]) polyhole(d = microswitch_screw_d, h = microswitch_width + microswitch_surround);
+        }
+       
     }
 }
 
