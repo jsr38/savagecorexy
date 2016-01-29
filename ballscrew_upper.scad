@@ -35,16 +35,24 @@ mount_length = bearing_o_d + (thick * 2.0) + 10.0;
 mount_height = extrusion_h;
 
 microswitch_length    =  19.8;
-microswitch_width    =    6.4;
+microswitch_width    =    6.0;
 microswitch_height    =  10.6;
 microswitch_surround =    4.0;
 microswitch_tol       =    0.5;
+microswitch_screw_pitch = 9.50;
+microswitch_screw_d =    2.5;
+microswitch_screw_h =    2.9;
+microswitch_screw_l_offset = 5.30;
+microswitch_blade_w  =    3.20;
+microswitch_blade_h  =    6.40;   //measured from blade tip to screw hole centre
+microswitch_blade_thick =  0.6;
+microswitch_blade_rec_clearance = 2.50;
+
 
 is_y_endstop = true;
 
-
-union() {
-    difference() {
+module frame_mount() {
+ difference() {
         // frame mount
         cube([mount_length, frame_mount_thick, mount_height]);
         translate([mount_length - 7.5 - frame_mount_pitch, -1.0, extrusion_h * 3.0/4.0]) rotate([-90, 0 ,0]) {
@@ -56,25 +64,57 @@ union() {
             translate([0, -mount_height, -1.0]) scale([1.0, (mount_height - (20.0 + bearing_h * 2.0)) / 20.0, 1.0]) cylinder(r=20, h = frame_mount_thick + 2.0);
         }
     }
+}
+
+module microswitch_surround() {
+    cube([microswitch_length + microswitch_surround, microswitch_width + microswitch_surround, microswitch_height + microswitch_surround], center=true);
+}
+
+module microswitch_cutout() {
+    union() {
+        cube([microswitch_length + microswitch_tol, microswitch_width + microswitch_tol, microswitch_height + microswitch_tol], center=true);
+        // the blade and receptacle cut-outs
+        cube([microswitch_blade_thick + microswitch_blade_rec_clearance / 2.0, microswitch_blade_w + microswitch_blade_rec_clearance / 2.0, microswitch_blade_h - microswitch_screw_h]);
+    
+    }
+}
+
+
+union() {
     
     translate ([0, -1.0 * (bearing_mount_r - thick), ballscrew_upper_spigot]) {
         difference() {  
                 union() {
+                    // frame mount
+                    //reverse out the translation :-( should be only one rotate-translate-scale :-(
+                    translate ([0, 1.0 * (bearing_mount_r - thick), -1.0 * ballscrew_upper_spigot]) frame_mount();
                     // bearing mount
                     cylinder(r = bearing_mount_r, h = bearing_h * 2.0);
                     // end-stop microswitch 
-                    translate([0, -bearing_mount_r, bearing_h]) cube([microswitch_length + microswitch_surround, microswitch_width + microswitch_surround, microswitch_height + microswitch_surround], center=true);
+                    translate([-bearing_mount_r, 0, bearing_h]) {
+                        rotate([0,0,90]) {
+                            microswitch_surround();
+                        }
+                    }
                     translate([0, (bearing_mount_r - thick) + frame_mount_thick / 2.0, bearing_h]) {
-                        rotate([0,90,0]) cube([microswitch_length + microswitch_surround, microswitch_width + microswitch_surround, microswitch_height + microswitch_surround], center=true);
+                        rotate([0,90,0]) {
+                            microswitch_surround();
+                        }
                     }
                 }
                 // bearing receptacle
                 translate ([0, 0, -1.0]) polyhole(d = bearing_o_d + bearing_o_tol, h = bearing_h + 1.5);
                 translate ([0, 0, bearing_h - 0.5]) polyhole(d = bearing_i_d + 0.5, h = bearing_h + 1.5);
                 // cutout for end-stop microswitch
-                translate([0,-bearing_mount_r,-microswitch_surround / 2.0 - 1.0 + bearing_h]) cube([microswitch_length + microswitch_tol, microswitch_width + microswitch_tol, microswitch_height + microswitch_tol], center=true);
-                translate([0, (bearing_mount_r - thick) + frame_mount_thick / 2.0, bearing_h]) {
-                    rotate([0,90,0]) cube([microswitch_length + microswitch_tol, microswitch_width + microswitch_tol, microswitch_height + microswitch_tol], center=true);
+                translate([-bearing_mount_r,0,-microswitch_surround / 2.0 - 1.0 + bearing_h]) {
+                    rotate([0,0,90]) {
+                        microswitch_cutout();
+                    }
+                }
+                translate([-microswitch_surround / 2.0, (bearing_mount_r - thick) + frame_mount_thick / 2.0, bearing_h]) {
+                    rotate([0,90,0]) {
+                        microswitch_cutout();
+                    }
                 }
         }
     }
