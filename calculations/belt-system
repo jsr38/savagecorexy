@@ -5,22 +5,27 @@
 
 \begin{document}
 
-\title{How to Structure a \LaTeX{} Document}
+\title{3D printer calculations}
 \author{Joe Bloggs\\
   School of Computing,\\
   University of Study,\\
   Books,\\
   United Readdom,\\
   RN 1234\\
-  \texttt{jbloggs@latex.wizard}}
+  \texttt{jeremy.reeve81@gmail.com}}
 \date{\today}
 \maketitle
 
 \section{Belt calculations}
 
+For an endless belt, what is the circumference required to fit two pullies, radii $r_1,r_2$ and separation, $d$?
+
 \begin{equation}
 l  = \pi \left( r_1 + r_2 \right) + 2\sqrt{ s^2 + \left( r_2 - r_1 \right) ^2 } 
 \end{equation}
+
+Steps per millimeter of travel in the X direction:
+
 
 
 
