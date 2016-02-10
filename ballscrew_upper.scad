@@ -139,14 +139,19 @@ union() {
                     // bearing mount
                     cylinder(r = bearing_mount_r, h = bearing_h * 2.0);
                     // end-stop microswitch 
-                    translate([-bearing_mount_r, 0, bearing_h]) {
-                        rotate([0,0,90]) {
-                            microswitch_surround();
+                    if (is_z_endstop) {
+                        translate([-bearing_mount_r, 0, bearing_h]) {
+                            rotate([0,0,90]) {
+                                microswitch_surround();
+                            }
                         }
                     }
-                    translate([0, (bearing_mount_r - thick) + frame_mount_thick / 2.0, bearing_h]) {
-                        rotate([0,90,0]) {
-                            microswitch_surround();
+                    
+                    if (is_y_endstop) {
+                        translate([0, (bearing_mount_r - thick) + frame_mount_thick / 2.0, bearing_h]) {
+                            rotate([0,90,0]) {
+                                microswitch_surround();
+                            }
                         }
                     }
                 }
@@ -154,14 +159,19 @@ union() {
                 translate ([0, 0, -1.0]) polyhole(d = bearing_o_d + bearing_o_tol, h = bearing_h + 1.5);
                 translate ([0, 0, bearing_h - 0.5]) polyhole(d = bearing_i_d + 0.5, h = bearing_h + 1.5);
                 // cutout for end-stop microswitch
-                translate([-bearing_mount_r,0,-microswitch_surround / 2.0 - 1.0 + bearing_h]) {
-                    rotate([0,0,90]) {
-                        microswitch_cutout();
+                
+                if (is_z_endstop) {
+                    translate([-bearing_mount_r,0,-microswitch_surround / 2.0 - 1.0 + bearing_h]) {
+                        rotate([0,0,90]) {
+                            microswitch_cutout();
+                        }
                     }
                 }
-                translate([-microswitch_surround / 2.0, (bearing_mount_r - thick) + frame_mount_thick / 2.0, bearing_h]) {
-                    rotate([0,90,0]) {
-                        microswitch_cutout();
+                if (is_y_endstop) {
+                    translate([-microswitch_surround / 2.0, (bearing_mount_r - thick) + frame_mount_thick / 2.0, bearing_h]) {
+                        rotate([0,90,0]) {
+                            microswitch_cutout();
+                        }
                     }
                 }
         }
