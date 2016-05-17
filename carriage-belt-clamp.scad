@@ -3,6 +3,8 @@ m3_diameter = 3.4;
 
 use <belt-clamp_GT2.scad>
 use <MCAD/polyholes.scad>
+include <microswitch-cutout.scad>
+include <hex-nut.scad>
 
 $fn = 100;
 
@@ -23,8 +25,10 @@ mount_hole_y_pitch = 20.0;
 mount_hole_r = 2.6;
 
 m3_diameter = 3.4;
+m3_nut_diameter = 5.5;
+m3_nut_height = 2.4;
 
-clamp_height = 3;
+clamp_height = 6;
 clamp_width = 10;
 clamp_length = 18;		// distance between the center of the 2 holes
 
@@ -46,8 +50,21 @@ difference () {
 				rotate([0, 90, 90]) belt_clamp_rear(); 
 			}
 		}
-
+       
+        translate([0,  (microswitch_length + microswitch_surround + microswitch_tol) / 2.0, (microswitch_width + microswitch_surround + microswitch_tol) / 2.0 + thickness]) rotate([90,0,90]) difference() {
+            microswitch_surround();
+        }
+            
+        translate([belt_clamp_base_x, belt_clamp_base_y -  (microswitch_length + microswitch_surround + microswitch_tol) / 2.0, (microswitch_width + microswitch_surround + microswitch_tol) / 2.0 + thickness]) rotate([90,0,90]) difference () {
+            microswitch_surround();      
+        }
 	}
+    
+    translate([0, (microswitch_length + microswitch_surround + microswitch_tol) / 2.0, (microswitch_width + microswitch_surround + microswitch_tol) / 2.0 + thickness]) rotate([90,0,90]) microswitch_cutout();
+       
+            
+    translate([belt_clamp_base_x, belt_clamp_base_y -  (microswitch_length + microswitch_surround + microswitch_tol) / 2.0, (microswitch_width + microswitch_surround + microswitch_tol) / 2.0 + thickness]) rotate([90,0,-90]) microswitch_cutout();
+       
 
 	for (x_i = [ 0 : 1 ]) {
 		for (y_j = [ 0 : 1] ) {
@@ -74,9 +91,12 @@ difference(){
 			translate(v = [clamp_length/2, 0, 0]) cylinder(r=clamp_width/2,h=clamp_height);
 			}
 		// screw holes
-		translate(v = [-clamp_length/2, 0, 0])polyhole(m3_diameter, clamp_height+2);
-		translate(v = [clamp_length/2, 0, 0]) polyhole(m3_diameter, clamp_height+2);
-}
+		translate(v = [-clamp_length/2, 0, -1]) polyhole(d = m3_diameter, h=clamp_height+2);
+		translate(v = [clamp_length/2, 0, -1]) polyhole(d = m3_diameter, h=clamp_height+2);
+        // nut trap
+        translate(v = [-clamp_length/2, 0, 0]) rotate([0,0,360/6*3/2]) hex_nut(r = m3_nut_diameter / 2 + microswitch_nut_trap_tol, h = m3_nut_height + microswitch_nut_trap_tol * 2.0);
+        translate(v = [clamp_length/2, 0, 0]) rotate([0,0,360/6*3/2]) hex_nut(r = m3_nut_diameter / 2 + microswitch_nut_trap_tol, h = m3_nut_height + microswitch_nut_trap_tol * 2.0);
+    }
 }
 
 
