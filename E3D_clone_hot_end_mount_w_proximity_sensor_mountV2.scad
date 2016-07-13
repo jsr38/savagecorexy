@@ -23,19 +23,19 @@
 
 
 
-JHeadDiameters = [12.7, 16, 25];
-JHeadDimensions = [3.7, 9.1, 12.3, 18.3, 50.1];
+JHeadDiameters = [12.3, 16, 25];
+JHeadDimensions = [4.05, 4.05+4.8, 12.3, 18.3, 50.1];
 
 FanMountingHoleWidth=32; //32 for a 40mm fan
 FlangeThickness=8;  // Thickness of mounting flange and Hot end mounting plate
 HotendHeight=25;  // height of Hot End mount on mounting flange
 FanWidth=40;
 FanMountPitch = 30.0; // Mounting hole pitch for ducted fan
-FlangeExtension=27.0;   //Length beyond fan with for hot end to mount
+FlangeExtension=32.0;   //Length beyond fan with for hot end to mount
 FlangeLength=FanWidth+FlangeExtension;// - 5.0;  //Total flange length
 HotEndHeatSinkWidth=25; //width of heat sink, ?? for E3D  25 for chinese E3D clone
 HotEndMountingThinArea=12.5;  //Thin band on the top of the HE
-HotEndMountingWideArea=30.5;  //Wide bands on the top of the HE
+HotEndMountingWideArea=16.5;  //Wide bands on the top of the HE
 HotEndMountingThinAreaHeight=5;  //Height of thin band
 HotEndMountingWideAreaHeight=13;  //Height of wide band
 ProxSensorDiameter=18.5;  //Diameter of proximity sensor
@@ -53,14 +53,14 @@ print_clearance=0.1; //additional clearance between two printed objects
 
 $fn=30;
 
-!rotate([-90,0,0])
+rotate([-90,0,0])
 translate([25,-FlangeThickness/2,30])
 difference(){
 CompleteHotEndMount();
 translate([0,-(ProxSensorDiameterMountFlangeWidth+DistanceBetweenHE_Sensor+HotEndHeatSinkWidth/2+5)-50,0])
 cube([100,100,100], center=true);
 }
-difference(){
+!difference(){
 rotate([-90,0,90])
 translate([25,(ProxSensorDiameterMountFlangeWidth+DistanceBetweenHE_Sensor+HotEndHeatSinkWidth/2+5),35])
 CompleteHotEndMount();
@@ -76,8 +76,8 @@ module CompleteHotEndMount(){
       //mounting_flange();
 	  
 	   //Flange to mount Hot end
-      translate([0,-FlangeLength / 2.0,-HotendHeight])
-      rounded_rectangle([FanWidth + 20.0,FlangeLength,FlangeThickness+2],CornerRadius);
+      translate([0,-FlangeExtension,-HotendHeight])
+      rounded_rectangle([FanWidth + 20,FlangeLength,FlangeThickness+2],CornerRadius);
 
       }  //union
 	  
@@ -97,7 +97,12 @@ module CompleteHotEndMount(){
       translate([( - CarriageMountHolePitch) / 2.0,-10.0,-HotendHeight]) cylinder(r= 2.55, h = FlangeThickness + 4.0, center = true);
       translate([( CarriageMountHolePitch) / 2.0,-10.0,-HotendHeight]) cylinder(r= 2.55, h = FlangeThickness + 4.0, center = true);
       
-	  // holes for retainer cap	 
+	  
+      // Cutout for V-wheel nuts on carriage
+      translate([( - CarriageMountHolePitch * 3) / 2,-10.0,-HotendHeight]) cylinder(r= 5, h = FlangeThickness + 4.0, center = true);
+      translate([( CarriageMountHolePitch * 3) / 2,-10.0,-HotendHeight]) cylinder(r= 5, h = FlangeThickness + 4.0, center = true);
+      
+      // holes for retainer cap	 
 	  translate([12,-(FlangeLength+1),-25])
 	  rotate([90,0,180])
 	 Locknut_and_screwhole(Screwlength=16,DepthOfNut=22);
