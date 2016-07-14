@@ -99,6 +99,7 @@ def print_help():
     print ('   -L  the number of bits for the look-up table (default to 8)')
     print ('   -D  the number of decimals to use in the look-up table. (default is 7)')
     print ('   -R  the value of the serie resistance (in Ohms).')
+    print ('   -p  circuit configuration, pull [up|down].  (default is down)')
     print ('   -h  display this help')
 
 
@@ -106,14 +107,14 @@ def print_help():
 datafile = 'data.txt'
 filetype = 'lut'
 lutfile = 'lut.c'
-B = 10      # 10 bits ADC
-L = 8       # 256 values in the LUT
-D = 7       # values have 7 significant digits
-R2 = 1500.  # The series resistance
-
+B = 10         # 10 bits ADC
+L = 8          # 256 values in the LUT
+D = 7          # values have 7 significant digits
+R2 = 1500.     # The series resistance
+pull = 'down'  # Circuit configuration - pull-down
 
 # constants
-zero_celsius = 273.15
+ZERO_CELSIUS = 273.15
 
 # parse arguments
 i = 1
@@ -139,6 +140,9 @@ while i < len(sys.argv):
     elif sys.argv[i] == '-t':
         filetype = sys.argv[i + 1]
         i += 2
+    elif sys.argv[i] == '-p':
+        pull = sys.argv[i + 1]
+        i += 2
     else:
         print_help()
 
@@ -148,7 +152,7 @@ data = np.loadtxt(fname=datafile, delimiter=',', dtype=float, comments='#')
 # First we fit the data to the three parameters equation
 # of section 2.1.5 of AVX document.
 R = data[:, 0] * 1000.
-T = data[:, 1] + zero_celsius
+T = data[:, 1] + ZERO_CELSIUS
 
 A = np.vstack((np.ones((len(R))), np.log(R), np.log(R) ** 3)).T
 b_vec = 1. / T
@@ -160,7 +164,7 @@ print (a, b, c)
 #p = lasso(A, b_vec, 1e-4)
 #a, b, c = p[1,0], p[1,0], p[2,0]
 
-t = np.arange(0, 80) + zero_celsius
+t = np.arange(0, 80) + ZERO_CELSIUS
 
 r = np.arange(1, 10001)
 t = 1. / (a + b * np.log(r) + c * np.log(r) ** 3)
@@ -172,7 +176,12 @@ N = 2 ** B
 div = 2 ** (B - L)
 n = np.arange(0, 2 ** L)
 alpha = (n * div + (div - 1) / 2. + 0.5) / N
-R_T = (1. / alpha - 1.) * R2
+
+if pull == 'down':
+    R_T = (1. / alpha - 1.) * R2
+elif pull == 'up':
+    R_T = (alpha / 1. - alpha) * R2
+
 lut = 1. / (a + b * np.log(R_T) + c * np.log(R_T) ** 3)
 
 # open and save LUT to file
@@ -182,14 +191,14 @@ format = '%.' + str(D) + 'f'
 
 if filetype == 'lut':
     for i in range(0, 2 ** L - 1):
-        f_lut.write(format % (lut[i] - zero_celsius))
+        f_lut.write(format % (lut[i] - ZERO_CELSIUS))
         f_lut.write(', ')
         if (i + 1) % 10 == 0:
             f_lut.write('\n  ')
             f_lut.write(format % lut[-1])
 else:
     for i in t:
-        f_lut.write(format % (lut[i] - zero_celsius))
+        f_lut.write(format % (lut[i] - ZERO_CELSIUS))
         f_lut.write(', ')
         if (i + 1) % 10 == 0:
             f_lut.write('\n  ')
@@ -199,7 +208,7 @@ f_lut.write(' };\n')
 
 # plot some stuff
 plt.subplot(2, 2, 1)
-plt.plot(r, t - zero_celsius, 'k-', R, T - zero_celsius, 'x')
+plt.plot(r, t - ZERO_CELSIUS, 'k-', R, T - ZERO_CELSIUS, 'x')
 plt.xlabel('Resistance of thermistor [Ohm]')
 plt.ylabel('Temperature [Celsius]')
 plt.title('Raw')
@@ -208,7 +217,7 @@ plt.axis('tight')
 plt.ylim(-5, 150)
 
 plt.subplot(2, 2, 2)
-plt.plot((R2)/(r+R2), t-zero_celsius, 'k-', (R2)/(R+R2), T-zero_celsius, 'x')
+plt.plot((R2)/(r+R2), t-ZERO_CELSIUS, 'k-', (R2)/(R+R2), T-ZERO_CELSIUS, 'x')
 plt.title('Linearized')
 R2_str = '%.2f' % (R2 / 1000.)
 plt.xlabel('Value of resistance divider with $R_2=' + R2_str + 'k\Omega$')
@@ -220,7 +229,7 @@ plt.ylim(-5, 150)
 plt.subplot(2, 2, 3)
 print (np.arange(N))
 print (div)
-plt.stem(np.arange(N), lut[np.arange(N) // div] - zero_celsius)
+plt.stem(np.arange(N), lut[np.arange(N) // div] - ZERO_CELSIUS)
 plt.title('Look-up table')
 plt.xlabel('ADC value')
 plt.ylabel('Temperature')
