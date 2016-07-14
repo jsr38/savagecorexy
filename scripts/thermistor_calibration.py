@@ -93,6 +93,7 @@ def print_help():
     print ('   -i  the name of the file containing the calibration data')
     print ('       in the following format: two columns, comma separated, ')
     print ('       "resistance [kOhms], temperature [C]" pairs. (default data.txt)')
+    print ('   -t  output file type [raw|lut] ') 
     print ('   -o  the name of the file where to save the look-up table (default lut.txt)')
     print ('   -B  the number of bits of the ADC (default to 10)')
     print ('   -L  the number of bits for the look-up table (default to 8)')
@@ -103,6 +104,7 @@ def print_help():
 
 # default values
 datafile = 'data.txt'
+filetype = 'lut'
 lutfile = 'lut.c'
 B = 10      # 10 bits ADC
 L = 8       # 256 values in the LUT
@@ -134,6 +136,9 @@ while i < len(sys.argv):
     elif sys.argv[i] == '-R':
         R2 = float(sys.argv[i + 1])
         i += 2
+    elif sys.argv[i] == '-t':
+        filetype = sys.argv[i + 1]
+        i += 2
     else:
         print_help()
 
@@ -151,6 +156,7 @@ b_vec = 1. / T
 p = np.linalg.lstsq(A, b_vec)
 a, b, c = p[0][0], p[0][1], p[0][2]
 
+print (a, b, c)
 #p = lasso(A, b_vec, 1e-4)
 #a, b, c = p[1,0], p[1,0], p[2,0]
 
@@ -158,6 +164,7 @@ t = np.arange(0, 80) + zero_celsius
 
 r = np.arange(1, 10001)
 t = 1. / (a + b * np.log(r) + c * np.log(r) ** 3)
+
 
 
 # generate the lookup table
@@ -172,12 +179,22 @@ lut = 1. / (a + b * np.log(R_T) + c * np.log(R_T) ** 3)
 f_lut = open(lutfile, 'w')
 f_lut.write('float therm_lut[] = { ')
 format = '%.' + str(D) + 'f'
-for i in range(0, 2 ** L - 1):
-    f_lut.write(format % (lut[i] - zero_celsius))
-    f_lut.write(', ')
-    if (i + 1) % 10 == 0:
-        f_lut.write('\n  ')
-f_lut.write(format % lut[-1])
+
+if filetype == 'lut':
+    for i in range(0, 2 ** L - 1):
+        f_lut.write(format % (lut[i] - zero_celsius))
+        f_lut.write(', ')
+        if (i + 1) % 10 == 0:
+            f_lut.write('\n  ')
+            f_lut.write(format % lut[-1])
+else:
+    for i in t:
+        f_lut.write(format % (lut[i] - zero_celsius))
+        f_lut.write(', ')
+        if (i + 1) % 10 == 0:
+            f_lut.write('\n  ')
+            f_lut.write(format % lut[-1])
+        
 f_lut.write(' };\n')
 
 # plot some stuff
