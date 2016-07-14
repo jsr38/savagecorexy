@@ -1,0 +1,171 @@
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 11px; PADDING-BOTTOM: 0px; MARGIN: 0px auto; WIDTH: 940px; COLOR: #5b5b5b; PADDING-TOP: 0px; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+* {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+UL {
+	LIST-STYLE-TYPE: none
+}
+LI {
+	LIST-STYLE-TYPE: none
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; VERTICAL-ALIGN: middle; BORDER-RIGHT-WIDTH: 0px
+}
+A:link {
+	COLOR: #5b5b5b; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #5b5b5b; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #5b5b5b; TEXT-DECORATION: underline
+}
+A:active {
+	COLOR: #5b5b5b; TEXT-DECORATION: underline
+}
+.header {
+	CLEAR: both; OVERFLOW: hidden
+}
+.header LI {
+	FLOAT: left
+}
+.header LI.logo {
+	BACKGROUND: url(../images/logo.jpg) no-repeat left top; WIDTH: 177px; HEIGHT: 63px
+}
+.header LI.banner {
+	BACKGROUND: url(../images/banner.gif) no-repeat left top; MARGIN: 24px 0px 0px 32px; WIDTH: 318px; HEIGHT: 39px
+}
+.header LI.shopping {
+	MARGIN-TOP: 12px; DISPLAY: none; WIDTH: 30%; TEXT-ALIGN: right
+}
+.nav {
+	CLEAR: both; MARGIN: 0px auto
+}
+.main {
+	CLEAR: both; MARGIN: 7px 0px 10px; HEIGHT: auto
+}
+.mainLeft {
+	FLOAT: left; WIDTH: 169px
+}
+.mainCenter {
+	FLOAT: left; MARGIN: 0px 0px 0px 7px; WIDTH: 426px
+}
+.mainRight {
+	FLOAT: right; WIDTH: 169px
+}
+.mainS {
+	FLOAT: left; MARGIN: 0px 0px 0px 7px; WIDTH: 598px
+}
+.login {
+	MARGIN-BOTTOM: 7px; HEIGHT: 182px
+}
+.productTree {
+	MARGIN-TOP: 14px! important; HEIGHT: 243px; BACKGROUND-COLOR: #bbd57a
+}
+.productTree1 {
+	MARGIN: 7px 0px; HEIGHT: 28px
+}
+.introduct {
+	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; PADDING-BOTTOM: 7px; OVERFLOW: hidden; PADDING-TOP: 7px; BACKGROUND-COLOR: #bbd57a
+}
+.adText {
+	MARGIN-TOP: 7px; HEIGHT: 142px
+}
+.investigate {
+	MARGIN-TOP: 7px; HEIGHT: 200px; BACKGROUND-COLOR: #bbd57a
+}
+.search {
+	HEIGHT: 34px
+}
+.newList {
+	CLEAR: both; MARGIN-TOP: 0px; HEIGHT: 149px
+}
+.dayPrice {
+	CLEAR: both; MARGIN-TOP: 7px; HEIGHT: 243px
+}
+.nweShelf {
+	MARGIN-TOP: 7px; HEIGHT: 281px
+}
+.productCommend {
+	HEIGHT: 182px; BACKGROUND-COLOR: #fbffee
+}
+.saleTaxis {
+	MARGIN-TOP: 14px! important; OVERFLOW: hidden; HEIGHT: 243px; BACKGROUND-COLOR: #bdd67b
+}
+.saleTaxis1 {
+	MARGIN-TOP: 7px; OVERFLOW: hidden; HEIGHT: 143px; BACKGROUND-COLOR: #bbd57a
+}
+.saleTaxis2 {
+	MARGIN-TOP: 7px; OVERFLOW: hidden; BACKGROUND-COLOR: #bbd57a
+}
+.ad1 {
+	MARGIN-TOP: 7px; HEIGHT: 122px! important
+}
+.bottom {
+	CLEAR: both; HEIGHT: 90px
+}
+.bottom P.top {
+	LINE-HEIGHT: 4px; BACKGROUND-COLOR: #8fb126
+}
+.bottom UL.center {
+	MARGIN-TOP: 10px; HEIGHT: 49px
+}
+.bottom UL.center LI {
+	FLOAT: left
+}
+.bottom UL.center LI.visit {
+	WIDTH: 30%
+}
+.bottom UL.center LI.visit SPAN {
+	FONT-WEIGHT: bold; COLOR: #7f9d00
+}
+.bottom UL.center LI.link {
+	WIDTH: 49%; COLOR: #5a6f24; TEXT-ALIGN: center
+}
+.bottom UL.center LI.link A {
+	COLOR: #5a6f24; TEXT-DECORATION: none
+}
+.bottom UL.center LI.link A:hover {
+	COLOR: #5a6f24; TEXT-DECORATION: underline
+}
+.bottom UL.center LI.pic {
+	WIDTH: 20%; TEXT-ALIGN: right
+}
+.bottom UL.center LI.pic IMG {
+	PADDING-RIGHT: 9px; PADDING-LEFT: 9px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; PADDING-TOP: 0px
+}
+.bottom P.copyright {
+	TEXT-ALIGN: center
+}
+.orderLogin * {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; FONT-FAMILY: "ËÎÌו"
+}
+.orderLogin {
+	CLEAR: both
+}
+.orderLogin .left {
+	FLOAT: left; OVERFLOW: hidden; WIDTH: 25%; MARGIN-RIGHT: 50px
+}
+.orderLogin .right {
+	FLOAT: left; WIDTH: 65%
+}
+.orderLogin .left .content2 {
+	MARGIN-TOP: 20px
+}
+.orderLogin H3 {
+	FONT-SIZE: 14px; MARGIN: 20px 0px 0px; COLOR: #111111
+}
+.orderLogin P {
+	MARGIN: 10px 0px; COLOR: #999999
+}
+.orderLogin .left .content1 .mlogin {
+	BORDER-RIGHT: #9ec680 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #9ec680 1px solid; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; BORDER-LEFT: #9ec680 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: #9ec680 1px solid; HEIGHT: 210px
+}
+.orderLogin .left .content2 .buy {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #cccccc 1px solid; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; BORDER-LEFT: #cccccc 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: #cccccc 1px solid
+}
+.orderLogin .right .content3 .register {
+	BORDER-RIGHT: #ebb1a6 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #ebb1a6 1px solid; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; BORDER-LEFT: #ebb1a6 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: #ebb1a6 1px solid
+}

@@ -1,0 +1,145 @@
+% -*- mode: latex; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- 
+
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+\begin{document}
+
+\title{The Mathematics of Fused Filament Fabrication}
+\author{J. S. Reeve\\
+  Independent Researcher\\
+  \texttt{jsr [at] jsreeve.org}}
+\date{\today}
+\maketitle
+
+\section{Drive Mechanisms}
+
+\subsection{Core XY}
+
+Equations of motion for a Core XY system are:
+
+
+\subsection{Delta}
+
+\subsection{Drive Belts}
+
+For an endless belt, what is the circumference required to fit two pullies, radii $r_1,r_2$ and separation, $d$?
+
+\begin{equation}
+l  = \pi \left( r_1 + r_2 \right) + 2\sqrt{ s^2 + \left( r_2 - r_1 \right) ^2 } 
+\end{equation}
+
+!!! This assumes $r_1 \approx r_2$  !!! TODO
+
+\subsection{Steps per Unit Distance}
+  
+Steps per millimeter of travel in the X direction:
+
+\section{Polymer Extrusion}
+\subsection{Extruder Calibration}
+
+\subsection{Volumetric Extrusion}
+
+\section{Temperature}
+\subsection{Thermistor Calibration}
+
+Thermistors, both NTC and PTC, and thermocouples are all used to sense temperatures at various critical locations on and around a typical FFF machine.  See the Wikipedia page relating to thermistors: \url{https://en.wikipedia.org/wiki/Thermistor}.  A widely used third-order model developed for semiconductor resistance is the Steinhart-Hart equation.
+
+\begin{equation}
+  \frac{1}{T} = a + b \ln (R) + c ( \ln (R) )^3 \gg k ( \ln (R) )^2 
+\end{equation}
+
+Coefficients $a$, $b$ and $c$ can be determined from empirically acquired data using a fitting method, in this case we choose least squares approximation.  Starting from acquired data \ref{table:thermistor_data}:
+
+\begin{table}[h]
+\begin{tabular}[c]{r|r}
+Resistance $R$ & Temperature $T$\\
+(k ohms) & (degrees celsius) \\
+\hline
+18.0 & 70.0 \\
+18.4 & 68.0 \\
+20.0 & 66.5 \\
+23.5 & 60.0 \\
+28.7 & 55.5 \\
+38.1 & 48.8 \\
+68.0 & 34.0 \\
+74.1 & 32.0 \\
+79.8 & 30.3 \\
+84.3 & 29.0 \\
+92.2 & 27.3 \\
+96.4 & 26.3 \\
+100.3 & 25.3 \\
+107.0 & 23.9 \\
+112.6 & 22.8 \\
+114.2 & 22.4 \\
+115.7 & 22.1 \\
+117.3 & 21.8 \\
+120.0 & 22.0 \\
+130.0 & 20.0
+\end{tabular}
+\caption[Thermistor Data]{Thermistor measurements peformed in lab.}
+\label{table:thermistor_data}
+\end{table}
+
+Summarising the least squares process and relating it to the numpy/scipy implementation referenced here:  \url{https://github.com/jsr38/savagecorexy/blob/cuboid/scripts/thermistor_calibration.py}.
+
+The general idea is to minimise the following norm:
+\begin{equation*}
+\| \textbf{b} - \textbf{Ax} \|^2
+\end{equation*}
+
+Suppose we took $n$ measurements where:
+
+\begin{equation*}
+\textbf{x} = \left[ \begin{array}{c} a \\ b \\ c \end{array} \right]  , \textbf{b} = \left[ \begin{array}{c} \frac{1}{T_1} \\ \vdots \\ \frac{1}{T_n} \end{array} \right]
+\end{equation*}
+
+\begin{equation*}
+  \textbf{A} = \begin{bmatrix}
+      1           & 1        & 1  & \hdots & 1 \\
+      \ln (R_1)   & \ln (R_2) & \ln (R_3) & \hdots & \ln (R_n)  \\
+      \ln (R_1)^3 & \ln (R_2)^3 & \ln (R_3)^3 & \hdots & \ln (R_n)^3
+    \end{bmatrix} ^{\intercal}
+\end{equation*}
+
+This can be achieved by inversion of the matrix $\textbf{A}$.  The following concerns the detail of generating a suitable lookup table given a circuit configuration and ADC of known resolution, that achieves the best resolution over our region of interest.
+
+The function used to generate lookup tables within the Repetier firmware assumes a different model, the $\beta$ model which discounts the third order effects:
+
+\begin{equation}
+  \frac{1}{T} = \frac{1}{T_0} + \frac{1}{\beta} \ln \left( \frac{R}{R_0} \right) 
+\end{equation}
+
+We could derive $\beta$ and supply a pair of points to this function in order to generate a lookup table but since we have the third-order approximation we may as well use this to generate the lookup table.  The accompanying script assumes a pull-up or pull-down resistor which linearises the thermistor response and hence reduces error introduced by finite resolution ADC, quantisation error, over our region of interest.
+
+\begin{equation*}
+N = 2^B  , B = 12 , \Delta b = 2^{B - L} = 2^4 = 16
+\end{equation*}
+
+\begin{equation*}
+\textbf{n} = \left[ \begin{array}{ccccc} 0 & 2^1 & 2^2 & \hdots & 2^L \end{array} \right]
+\end{equation*}
+
+\begin{equation*}
+\alpha _n = \left( n \Delta b + \frac{\Delta b -1 }{2} + \frac{1}{2} \right)
+\end{equation*}
+
+\begin{equation*}
+\textbf{$\alpha$} = \left[ \begin{array}{ccccc} \alpha _0 & \alpha _1 & \alpha _2 & \hdots & \alpha _n \end{array} \right] = \frac{V_o}{V_i}
+\end{equation*}
+
+
+Results of running the process on our data:
+
+
+\noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth]{thermistor_analysis}}
+
+
+\end{document}

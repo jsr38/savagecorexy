@@ -1,5 +1,6 @@
 /* idler-v2   */
 
+include <MCAD/polyholes.scad>
 
 $fn=100;
 

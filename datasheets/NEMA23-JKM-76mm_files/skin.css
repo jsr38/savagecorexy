@@ -1,0 +1,45 @@
+#main {
+	WIDTH: 940px
+}
+#top {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 67px
+}
+#logo {
+	FLOAT: left; WIDTH: 158px; HEIGHT: 67px
+}
+#sub_top {
+	FLOAT: left; WIDTH: 604px; HEIGHT: 67px
+}
+#topright {
+	FLOAT: left; WIDTH: 178px; HEIGHT: 67px
+}
+#menu {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 33px
+}
+#sub_menu {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 5px
+}
+#banner {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 226px
+}
+#aboutbanner {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 155px
+}
+#sub_banner {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 5px
+}
+#maincontent {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 160px
+}
+#aboutcontent {
+	FLOAT: left; WIDTH: 940px
+}
+#sub_content {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 20px
+}
+#link {
+	FLOAT: left; BACKGROUND-IMAGE: url(../images/home_14.jpg); WIDTH: 940px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 143px
+}
+#bottom {
+	FLOAT: left; WIDTH: 940px; HEIGHT: 26px
+}
