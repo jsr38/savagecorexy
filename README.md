@@ -1,62 +1,38 @@
-Wolf CoreXY
-============
+Savage CoreXY
+=============
 
 _NOTE_ This is still a work in progess, it is currently printing quite well.
-_UPDATE_ Changed the Y rails to Makerslide and Makeslide carriages and VWheels.
 
-A large build volume 3d printer based on the CoreXY concept.
+This work was originally derived from [wolfmanjm/wolfhbot](https://github.com/wolfmanjm/wolfhbot) although since then it has diverged significantly and probably has very little in common now, although I retain the fork as provenance. 
 
-It uses 2020 Misumi extrusions for most of the frame.
+A large build volume 3D printer based on the CoreXY concept.
 
-* The X carriage runs on 2020 and openrail from openbuilds.com
-* The Y carraiges run on Makerslide from Inventables.com
-* The drive can use either 65lb Spectra fishing line and machined spools, or GT2 pulleys and belts
-* the Belts have no corss over, they are stacked on top of eachother instead
-* build volume is around 12 inches cubed (300x300x300 mm)
-* The Z platform has one Z actuator made of 2040 vslot
-  and a printed carriage. It runs on an ACME 1/2" leadscrew with 10TPI and a printed PLA Nut
-  and uses a moving knot to keep the cantilever level
-* The X carriage is printable but is best milled from MDF
+It uses 4040 generic extrusions for most of the frame.
+
+* The X carriage runs on Makerslide from [Amber Spyglass Ltd](http://amberspyglass.co.uk/)
+* The Y carriages run on Makerslide from [Amber Spyglass Ltd](http://amberspyglass.co.uk/)
+* The drive uses GT2 pulleys and belts
+* the Belts have no cross over, they are stacked on top of each other instead
+* build volume is large 300x1200x300 mm
+* The Z platform has three stepper plus ballscrew Z actuators running on two 2040 Makerslides 
+  with cast aluminium carriage. It runs on 1204 ballscrews.
 
 Pictures and Videos
 -------------------
 
-* [first movements](http://youtu.be/cA50g_V9wbQ)
-* [second movement](http://youtu.be/p5AFRTE33c4)
-* [Drawing big circle](http://youtu.be/9L7iuisqjXY)
-* [Insane speed circle](http://youtu.be/wYBltiACMb0)
-* [New Z actuator](http://flic.kr/p/gcBkjw)
-* [New Z actuator](http://flic.kr/p/gcBGvX)
-* [Printing vase](http://youtu.be/nGm1CWDJkY0)
-* [Corexy Belt no cross over](http://flic.kr/p/iT5DkX)
-* [Corexy Belt no cross over](http://flic.kr/p/iT7Lpm)
-* [Corexy Belt no cross over](http://flic.kr/p/iT73UX)
+* [first movements](https://youtu.be/KUbpFoaNcHg)
+* [second movement](http://youtu.be/xxxxx)
 
-For historical purposes...
 
-* [animation of the scissor lift concept](http://blog.wolfman.com/files/scissor-lift.gif)
-* [Scissor Lift prototype in action](http://youtu.be/5y0PBw3Y6yg)
+Electronics and Firmware
+------------------------
 
-Recently re wired to be Corexy rather than HBot. This seems to reduce
-racking of the X Gantry. [See](http://joshuavasquez.com/docs/jVasquez/Projects/coreXY.html)
+I used an Alligator Board with some modifications.  Details of the board are here:  [jsr38/AlligatorBoard](https://github.com/jsr38/AlligatorBoard)
 
-I see no difference between using Spectra line drive and GT2 belts, in
-fact if anything it was slightly smoother using the line drive.
+My expansion board to allow alternative stepper drivers can be found here:  [jsr38/crocolulo](https://github.com/jsr38/crocolulo)
 
-Spectra Drive
---------------
-For Spectra drive the four idlers on the XGantry are grooved 5mm bearings that bolt
-directly to the extrusion slots. One of the X carriage bearings is
-raised 10mm to keep the lines parallel.
+I'm currently running Repetier firmware on the Alligator.  My fork containing the current configuration is here: [jsr38/Alligator-Repetier-Firmware](https://github.com/jsr38/Alligator-Repetier-Firmware)
 
-The four end idlers are grooved 5mm bearings that are screwed directly
-into the tapped center of the vertical extrusion. This provides very
-solid idlers than can take the tension of the spectra when it is
-tight.  The grooves are necessary otherwise the spectra just runs off
-the top or bottom of the bearing.
-These bearings are stacked on top of each other with a
-washer in between, this allows the cables to run on top of each other
-and no cross over is needed.
 
 GT2 Belt Drive
 --------------
@@ -66,11 +42,6 @@ I avoid the cross over of the belts by running the two belts one above the other
 
 Z Bed
 -----
-
-The scissor lift idea was nice but the prototype showed that a Nema17
-did not have enough torque to lift the bed.  I think the bottom of the
-scissor lift needs to lift 4 times the weight so any pressure on the
-top caused the motor to skip.
 
 The new Z actuator is a length of 500mm of 2040 VSlot, with a printed
 carriage and v wheels. Driven by a McMaster ACME 1/2" leadscrew with
@@ -132,15 +103,6 @@ Aluminum parts are from Misumi with Misumi part numbers
 * lots of M5 nuts and bolts
 * lots of M3 nuts and bolts
 * 2x Nema 17 Stepper motors (preferably Kysan or equivalent)
-
-Spectra drive
--------------
-* 2x  Delrin Spools for [Spectra](http://3d.grabercars.com/?product=filament-drive-reel-grooved-delrin-18mm-o-d-for-kossel) or any of the spools he sells at http://3d.grabercars.com/?post_type=product
-* 8x  625VV grooved bearings - for idlers from [ebay](http://www.ebay.com/itm/10-5-16-5mm-625VV-5mm-V-Groove-Guide-Pulley-Sealed-Rail-Ball-Bearing-5-16-5-/170998886188?pt=BI_Heavy_Equipment_Parts&hash=item27d053ef2c)
-* several yards of 65lb Spectra fishing line (Powerpro)
-* 2x ball swivels from a fishing store
-
-OR
 
 Belt Drive
 ----------
