@@ -164,9 +164,9 @@ print (a, b, c)
 #p = lasso(A, b_vec, 1e-4)
 #a, b, c = p[1,0], p[1,0], p[2,0]
 
-t = np.arange(0, 80) + ZERO_CELSIUS
+t = np.arange(0, 300) + ZERO_CELSIUS
 
-r = np.arange(1, 10001)
+r = np.arange(1, 150001)
 t = 1. / (a + b * np.log(r) + c * np.log(r) ** 3)
 
 
@@ -180,9 +180,14 @@ alpha = (n * div + (div - 1) / 2. + 0.5) / N
 if pull == 'down':
     R_T = (1. / alpha - 1.) * R2
 elif pull == 'up':
-    R_T = (alpha / 1. - alpha) * R2
+    R_T = (alpha / (1. - alpha)) * R2
 
+print(R_T)
+    
 lut = 1. / (a + b * np.log(R_T) + c * np.log(R_T) ** 3)
+
+#element wise multiply to get the ADC midpoint value
+level = np.multiply(alpha, div * n).astype(int)
 
 # open and save LUT to file
 f_lut = open(lutfile, 'w')
@@ -195,14 +200,15 @@ if filetype == 'lut':
         f_lut.write(', ')
         if (i + 1) % 10 == 0:
             f_lut.write('\n  ')
-            f_lut.write(format % lut[-1])
-else:
-    for i in t:
-        f_lut.write(format % (lut[i] - ZERO_CELSIUS))
-        f_lut.write(', ')
-        if (i + 1) % 10 == 0:
-            f_lut.write('\n  ')
-            f_lut.write(format % lut[-1])
+    f_lut.write(format % (lut[-1] - ZERO_CELSIUS))
+elif filetype == 'raw':
+    for i in range(0, 2 ** L - 1):
+        f_lut.write('{{ {}'.format(level[i]))
+        f_lut.write(', {} * 8 }}, '.format(lut[i] - ZERO_CELSIUS))
+        if (i + 1) % 3 == 0:
+            f_lut.write('\ \n  ')
+    f_lut.write('{{ {}'.format(level[i]))
+    f_lut.write(', {} * 8 }}'.format(lut[-1] - ZERO_CELSIUS))
         
 f_lut.write(' };\n')
 
